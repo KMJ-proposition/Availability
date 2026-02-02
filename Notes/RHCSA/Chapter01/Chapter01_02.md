@@ -1,33 +1,36 @@
-# RHCSA \(EX200\) Exam Preparation Guide
+# RHCSA (EX200) Exam Preparation Guide
 - https://rhcsa.github.io/
 
-## ㄱ\. 소개
+## ㄱ. 개요
+### Chapter 01 - 01. Understand and user essential tools
+#### 02 - Use input-output redirection
+- 리다이렉션과 파이프라인 학습
 
-### Chapter 0 \- 0
-- 01\. Understand and user essential tools
-    - 02 - Use input-output redirection
+- 표준 출력과 표준 오류의 구분
 
-### Commands \|\| Files
-- \>, \>\>, \<
-    - 리다이렉션: 스트림을 파일과 연결한다.
-- \|
-    - 파이프라인: 프로세스 간 스트림을 연결한다.
-- \&\>
-	- 표준 출력과 표준 오류를 동시에 파일로 내보낸다.
-- wc, head, tail, date
-    - word count
-	- 머릿줄
-	- 꼬릿줄
-	- 날짜와 시간
-- \/dev\/null, \/dev\/zero, \/dev\/random, \/dev\/urandom
-	- 커널 기능의 가상 장치 파일
+- 주요 명령
+	- \>, \>\>, \<
+		- 리다이렉션: 스트림을 파일과 연결한다.		
+	- \|
+		- 파이프라인: 프로세스 간 스트림을 연결한다.
+	- \&\>
+		- 표준 출력과 표준 오류를 동시에 파일로 내보낸다.
+	- wc, head, tail, date
+		- word count
+		- 머릿줄
+		- 꼬릿줄
+		- 날짜와 시간
+		
+- 특수 시스템
+	- \/dev\/null, \/dev\/zero, \/dev\/random, \/dev\/urandom
+		- 커널 기능의 가상 장치 파일
 
-## ㄴ. 후기
+## ㄴ. 특징
 - 스트림은 그냥 통로이다. 즉, 스트림은 스트림이다.
 
 ## ㄷ. 본문
 
-### 1\. Standard Output Redirection \(\>\, \>\>\)
+### 1. Standard Output Redirection (\>\, \>\>)
 #### 출력 리다이렉션
 - \>, \>\>
 	- 명령어의 내용을 파일 내용으로 '출력'한다. 쓰기 전용
@@ -78,7 +81,7 @@
 
 
 
-### 2\. Standard Input Redirection \(\<\)
+### 2. Standard Input Redirection (\<)
 #### 입력 리다이렉션
 - \<
 	- 우측의 파일 내용을 명령어로 '입력'함. 읽기 전용
@@ -97,7 +100,7 @@
 		202x. 0x. 0x. (일) 1x:1x:xx KST
 	```
 
-### 3\. Piping Output Between Commands \(\|\)
+### 3. Piping Output Between Commands (\|)
 #### 파이프라인(파이프)
 - 	|
 	- 명령어의 표준 출력 스트림을 파이프 다음 명령어의 표준 입력으로 전달한다.
@@ -136,25 +139,25 @@
 
 
 
-### 4\. Error Redirection \(2\>\, 2\>\>\)
+### 4. Error Redirection (2\>\, 2\>\>)
 #### 오류 메시지
 - 리다이렉션 전의 숫자 2는 FD 2번, 표준 오류를 나타낸다.
 	- 보통 '오류'라고 부른다.
 	- 리다이렉션으로 오류 메시지를 파일로 전달한 것이다.
 - 오류 메시지를 리다이렉션으로 출력해보자.
-	- 리다이렉션\(\>\)
+	- 리다이렉션(\>)
 		```
 		root# ls /RHCSA_EXAM/PASS_EXAM.txt 2> ~/errors.txt
 			ls: cannot access '/RHCSA_EXAM/PASS_EXAM.txt': 그런 파일이나 디렉터리가 없습니다
 		```
-	- 리다이렉션\(\>\>\)
+	- 리다이렉션(\>\>)
 		```
 		root# ls /RHCSA_EXAM/EXAM_FEE.txt 2>> ~/errors.txt
 			ls: cannot access '/RHCSA_EXAM/PASS_EXAM.txt': 그런 파일이나 디렉터리가 없습니다
 			ls: cannot access '/RHCSA_EXAM/EXAM_FEE.txt': 그런 파일이나 디렉터리가 없습니다
 		```
 
-### 5\. Redirecting Both Output and Error
+### 5. Redirecting Both Output and Error
 #### 표준 출력과 오류의 조합
 - &>
 	- '&'와 다르다. 
@@ -181,7 +184,7 @@
 	```
 
 
-### 6\. Suppressing Output \(\/dev\/null\)
+### 6. Suppressing Output (\/dev\/null)
 #### 특별한 장치
 - /dev/null
 	- 한 단어로 표현하자면 블랙홀
@@ -194,9 +197,9 @@
 	root# (ls /nothing 2>&1) > /dev/null
 	```
 
-### 7\. Redirecting Output and Errors Separately
+### 7. Redirecting Output and Errors Separately
 #### 표준 출력과 표준 오류를 따로 지정해보자.
-- 표준 출력\(\>\) 다음 표준 오류\(2\>\)
+- 표준 출력(\>) 다음 표준 오류(2\>)
 	```
 	root# ls /etc /invalid/directory > ~/out.txt 2> ~/err.txt
 	```
@@ -216,7 +219,7 @@
 		ls: cannot access '/invalid/directory': 그런 파일이나 디렉터리가 없습니다
 	```
 
-### 8\. Combining Multiple Redirections
+### 8. Combining Multiple Redirections
 #### 한 명령줄에서 여러 리다이렉션을 활용해보자.
 - 표준 출력 + 표준 오류
 	```
@@ -238,8 +241,8 @@
 		ls: cannot access '/invalid/directory': 그런 파일이나 디렉터리가 없습니다
 	```
 
-## ㄹ\. 명령줄 실행 기록
-- user: root
+## ㄹ. 명령줄 기록
+- History
 	```
 	1000  ls /etc > ~/output.txt
 	1001  cd ~

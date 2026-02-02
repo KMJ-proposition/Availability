@@ -1,24 +1,26 @@
-# RHCSA \(EX200\) Exam Preparation Guide
-- https://rhcsa.github.io/
+# PowerShell 101
+- https://learn.microsoft.com/ko-kr/powershell/scripting/learn/ps101/01-getting-started?view=powershell-7.5
 
-## ㄱ\. 소개
-
-### Chapter 0 \- 0
+## ㄱ. 개요
+### 장 - 
+#### Object
 - 
+    ```
     - 
-
-### Commands \|\| Files
-- 
+        - 
+        
     - 
-- 
-    - 
-- 
-    - 
+        - 
 
-## ㄴ\. 후기
+    - 
+        - 
+
+    ```
+
+## ㄴ. 특징
 - 
 
-## ㄷ\. 본문
+## ㄷ. 본문
 
 ### 
 #### 
@@ -32,8 +34,8 @@
 #### 
 - 
 
-## ㄹ\. 명령줄 실행 기록
-- user: 
+## ㄹ. 실행 기록
+- History
 ```
 
 ```

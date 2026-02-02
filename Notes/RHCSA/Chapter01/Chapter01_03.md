@@ -1,35 +1,34 @@
-# RHCSA \(EX200\) Exam Preparation Guide
+# RHCSA (EX200) Exam Preparation Guide
 - https://rhcsa.github.io/
 
-## ㄱ\. 소개
+## ㄱ. 개요
+### Chapter 01 - 01. Understand and user essential tools
+#### 03 - User grep and regular expressions to analyze text
+- grep 명령어의 사용
 
-### Chapter 0 \- 0
-- 01\. Understand and user essential tools
-    - 03 \- User grep and regular expressions to analyze text
+- 주요 명령
+    - GREP(BRE, ERE)
+        - https://www.gnu.org/software/grep/manual/html_node/Basic-vs-Extended.html
+        - BRE(Basic Regular Expressions)
+            - 기본 정규식: 특수 문자를 사용하려면 이스케이프\(\\\)와 함께 사용하여야 한다.
+        - ERE(Extended Regular Expressions)
+            - 확장 정규식: 특수 문자가 기본으로 활성화되어 있다.
+    - Regex(Regular Expressions)
+        - . \, \! \$ \^ \* \+ \- \= \: \? \( \) \{ \} \[ \] \\ \| \\A \\Z \\G ...
+    - grep
+        - Global Regular Expression Print
+        - 파일 전역에서 정규 표현식을 사용해 일치하는 줄을 출력한다.
+    - echo
+        - 메아리
+        - 사용자의 문자열 입력을 메아리처럼 그대로 내보낸다.
+    - ps
+        - Process Status
+        - 동작 중인 프로세스의 상태를 목록화하여 출력한다.
 
-### Commands \|\| Files
-- GREP(BRE, ERE)
-    - https://www.gnu.org/software/grep/manual/html_node/Basic-vs-Extended.html
-    - BRE(Basic Regular Expressions)
-        - 기본 정규식: 특수 문자를 사용하려면 이스케이프\(\\\)와 함께 사용하여야 한다.
-    - ERE(Extended Regular Expressions)
-        - 확장 정규식: 특수 문자가 기본으로 활성화되어 있다.
-- Regex(Regular Expressions)
-    - \. \, \! \$ \^ \* \+ \- \= \: \? \( \) \{ \} \[ \] \\ \| \\A \\Z \\G ...
-- grep
-    - Global Regular Expression Print
-    - 파일 전역에서 정규 표현식을 사용해 일치하는 줄을 출력한다\.
-- echo
-    - 메아리
-    - 사용자의 문자열 입력을 메아리처럼 그대로 내보낸다\.
-- ps
-    - Process Status
-    - 동작 중인 프로세스의 상태를 목록화하여 출력한다\. 
+## ㄴ. 특징
+- grep 명령어는 정규 표현식 기반 파일 내용 탐색기이다.
 
-## ㄴ\. 후기
-- 기초가 부족해도 한참 부족하다\.
-
-## ㄷ\. 본문
+## ㄷ. 본문
 
 ### 1. Basic grep Usage
 #### grep 명령어를 써보자.
@@ -42,7 +41,7 @@
 
 ### 2. Using Regular Expressions with grep
 #### 정규 표현식을 써보자.
-- \.
+- .
     - .   --> 한 문자
     - ..  --> 두 문자
     - ... --> 세 문자
@@ -101,8 +100,8 @@
     ```
 
 ### 3. Using Wildcards and Quantifiers
-#### 와일드 카드\(\.\)의 수를 변경해보며 사용해보자.
-- 와일드 카드\(\.\) 3개
+#### 와일드 카드\(.\)의 수를 변경해보며 사용해보자.
+- 와일드 카드\(.\) 3개
     ```
     root# grep 'root...' /etc/passwd
         root:x:0:0:root:/root:/bin/bash
@@ -131,7 +130,7 @@
 #### 다른 명령어와 조합해 사용해보자.
 - ps \+ grep
     - Process Status
-    - 동작 중인 프로세스의 상태를 목록화하여 출력한다\.
+    - 동작 중인 프로세스의 상태를 목록화하여 출력한다.
     ```
     root# ps aux | grep 'sshd'
         root        1095  0.0  0.3  19748 10916 ?        Ss   17:25   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
@@ -189,8 +188,8 @@
         ftp-data        20/tcp
     ```
 
-## ㄹ\. 명령줄 실행 기록
-- user: root
+## ㄹ. 명령줄 기록
+- History
     ```
     1009  grep 'root' /etc/passwd
     1010  tail -n 5 /etc/passwd
