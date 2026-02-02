@@ -1,2 +1,0 @@
-ls: cannot access '/invalid/directory': 그런 파일이나 디렉터리가 없습니다
-ls: cannot access '/invalid/directory': 그런 파일이나 디렉터리가 없습니다

@@ -1,7 +1,0 @@
-hello
-world
-TESTline
-Regex: .,!$^*+-=:?(){}[]\|
-
-Regex: <>\d\D\w\W\s\S	
-\A\Z\G

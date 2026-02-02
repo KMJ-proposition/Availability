@@ -1,2 +1,0 @@
-ls: cannot access '/RHCSA_EXAM/PASS_EXAM.txt': 그런 파일이나 디렉터리가 없습니다
-ls: cannot access '/RHCSA_EXAM/EXAM_FEE.txt': 그런 파일이나 디렉터리가 없습니다
