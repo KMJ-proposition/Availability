@@ -4,9 +4,12 @@
 ## ㄱ. 개요
 ### Chapter 01 - 01. Understand and user essential tools
 #### 01 - Access a shell prompt and issue commands with correct syntax
-- Shell의 기본 명령어를 사용
+- Shell의 기본 명령어 학습
 
-- 주요 명령
+#### 목표
+- 기본 명령어 입력을 숙달하고 이해할 수 있다.
+
+#### 주요 명령
    - tty
       - 사용중인 셸 확인      
    - ssh
@@ -159,7 +162,7 @@
 - \!23
    - CLI가 목록에 저장된 23번 명령어를 읽어와줌. 화살표 키 위를 누르면 23번 명령어를 입력해줌.
 
-## ㄹ. 명령줄 기록
+## ㄹ. 기록
 - History
    ```
    1007  tty

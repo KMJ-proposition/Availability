@@ -4,9 +4,12 @@
 ## ㄱ. 개요
 ### Chapter 01 - 01. Understand and user essential tools
 #### 03 - User grep and regular expressions to analyze text
-- grep 명령어의 사용
+- grep 명령어 학습
 
-- 주요 명령
+#### 목표
+- grep 명령어 입력을 숙달하고 원리를 이해한다.
+
+#### 주요 명령
     - GREP(BRE, ERE)
         - https://www.gnu.org/software/grep/manual/html_node/Basic-vs-Extended.html
         - BRE(Basic Regular Expressions)
@@ -188,7 +191,7 @@
         ftp-data        20/tcp
     ```
 
-## ㄹ. 명령줄 기록
+## ㄹ. 기록
 - History
     ```
     1009  grep 'root' /etc/passwd
