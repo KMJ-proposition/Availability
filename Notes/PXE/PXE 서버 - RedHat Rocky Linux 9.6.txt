@@ -1,0 +1,152 @@
+PXE 킥스타트 서버 구현
+
+  * 참고 문헌
+    - 2023, 우재남, 「이것이 리눅스다」, 한빛미디어
+    - 
+    - 
+  * 사용 도구
+    - Microsoft Copilot
+
+
+트러블슈팅
+    1. TFTP 타임아웃
+        - 해결: 방화벽 설정에 TFTP의 포트 추가(69/udp)
+    2. squashfs.img 파일 전송 실패
+        - 해결: 방화벽 종료 -> 포트 문제임을 알 수 있음.
+
+
+PXE 서버란?
+    설치 이미지 없이 운영 체제 설치가 가능한 부팅 환경.
+    Preboot eXecution Environment의 약자로 BIOS/UEFI에서 설정 가능하다.
+    PXE 환경에서는 USB, 디스크와 같은 물리 매체가 없어 직접 커널을 적재할 수 없다. 이는 PXE 초기 파일 시스템 접근이 불가능하기 때문이다.
+    따라서 네트워크로 부트 로더를 받아 실행해야 OS 설치가 가능하다.
+
+
+A. 설치 패키지
+    - syslinux: 부트 로더 모음
+    - dhcp-server: IP 할당 및 부팅 정보 제공용
+    - tftp-server: 부트 로더 파일 제공용
+    - vsftpd: 설치용 이미지 파일 제공용
+
+
+B. 패키지 사용 설명
+    - syslinux
+        왜: PXE 환경에서는 BIOS/UEFI가 커널과 initrd를 직접 적재할 수 없어 부트 로더가 대신한다.
+        어떻게: 클라이언트는 부트 로더를 다운로드하고 메모리 적재 뒤 실행한다.
+
+    - dhcp-server
+        왜: 클라이언트는 파일 수신을 위해 네트워크 주소를 할당 받는다. OS 설치를 위한 부트 로더 파일의 이름을 전달 받는다.
+        어떻게: 클라이언트에 IP를 할당하고 부트 로더 파일의 이름을 제공한다.
+
+    - tftp-server
+        왜: PXE ROM이 TCP 스택을 포함하지 않기 때문에 UDP로 부트 로더를 받는다.
+        어떻게: 부팅 전 단계에서 TFTP로 부트 로더를 다운로드한다.
+
+    - vsftpd
+        왜: PXE 서버가 OS 설치 이미지 파일을 클라이언트에게 제공한다.
+        어떻게: 클라이언트의 커널이 실행된 뒤, 내부 설치 프로그램이 FTP로 OS 이미지를 다운로드 한다.
+
+
+C. 흐름
+    1. 클라이언트 노드는 BIOS 또는 UEFI의 PXE 활성화
+    2. DHCP로 클라이언트에게 IP주소 할당 및 네트워크 활성화
+    3. TFTP로 syslinux 패키지의 'pxelinux.0' 부트 로더 파일을 클라이언트에게 제공
+    4. 클라이언트는 부트 로더 다운로드 및 적재
+    5. 부트 로더가 커널과 initrd를 다운로드
+    6. 커널 실행 후, 내장된 설치 프로그램이 FTP로 OS 이미지를 다운로드
+
+
+D. 용어 설명
+  * syslinux란? 리눅스용 경량 부트 로더 모음으로, PXE 부팅에 필요한 부트 로더 파일들을 포함하고 있다.
+  * 부트 로더란? 부팅에 필요한 커널과 initrd를 적재하기 위한 프로그램이다.
+  * 커널이란? 운영체제의 핵심으로 CPU, 메모리, 디스크, 네트워크와 같은 하드웨어 자원을 직접 또는 자동으로 제어할 수 있도록 설계된 프로그램이다.
+  * DHCP란? 같은 네트워크에 있는 노드에게 IP를 자동 할당해주는 프로토콜이며, 이 프로토콜을 통해 PXE 부팅에 필요한 정보를 제공해줄 수 있다.
+  * TFTP란? 인증, 암호화 등이 없어 구현이 단순한 UDP 기반 프로토콜이다. 부트 로더와 같은 경량 파일을 전송하기 적합하다. 따라서 PXE 부팅 표준이다.
+  * FTP란? TCP 기반의 파일 송수신용 프로토콜이다. 파일 전송 순서가 있어 신뢰성이 보장되고, 대용량 파일 전송에 적합하다.
+  * initrd란? Initial RAM Disk의 약자, 임시 루트 파일 시스템으로 작은 OS와 같다. 커널이 완전히 부팅되기 전 필요한 도구가 있고, OS 설치 스크립트를 실행한다.
+
+
+E. 셸 명령어 history
+    - 패키지 설치
+        dnf install -y syslinux dhcp-server tftp-server vsftpd
+    - 방화벽 설정
+        firewall-cmd --permanent --add-port=66/tcp # dhcp 포트
+        firewall-cmd --permanent --add-port=67/tcp # dhcp 포트
+        firewall-cmd --permanent --add-port=69/udp # dhcp 포트
+        firewall-cmd --permanent --add-port=21/tcp # ftp 포트
+    - 설정 파일 수정
+        # dhcp-server
+        vi /etc/dhcp/dhcpd.conf
+        subnet	192.168.10.0	netmask	255.255.255.0	{
+        	option	routers	192.168.10.2;
+	        option	subnet-mask	255.255.255.0;
+        	range	dynamic-bootp	192.168.10.151	192.168.10.180;
+	        option	domain-name-servers	192.168.10.2;
+        	allow	booting;
+	        allow	bootp;
+        	next-server	192.168.10.100;
+	        filename	"pxelinux.0";
+        }
+
+        # vsftpd
+        vi /etc/vsftpd/vsftpd.conf
+        # 12번 줄 
+        # anonymous_enable=NO    -> 삭제
+        # anonymous_enable=YES   -> 삽입
+
+    - 이미지 마운트 및 마운트 지점 변경
+        umount /etc/cdrom # 기존 이미지 마운트 지점
+        mount /etc/cdrom /var/ftp/pub # vsftpd 공용 디렉터리
+
+    - 파일 복사
+        # 부트 로더, 커널, initrd, 
+        cp /var/ftp/pub/images/pxeboot/vmlinuz /var/lib/tftpboot/      # 커널
+        cp /var/ftp/pub/images/pxeboot/initrd.img /var/lib/tftpboot/   # initrd
+        cp /var/ftp/pub/isolinux/ldlinux.c32 /var/lib/tftpboot/        # 부트 로더의 모듈, BIOS에서 사용한다.
+        cp /usr/share/syslinux/pxelinux.0 /var/lib/tftpboot/           # 부트 로더
+
+    - 부팅 관련 설정 파일 생성
+        mkdir /var/lib/tftpboot/pxelinux.cfg
+        cd /var/lib/tftpboot/pxelinux.cfg
+        vi default
+        cat default
+        DEFAULT		Rocky9.6_Auto_Install
+
+        LABEL		Rocky9.6_Auto_Install
+	        kernel	vmlinuz
+	        APPEND	initrd=initrd.img	inst.repo=ftp://192.168.10.100/pub/
+
+    - 데몬 재시작 및 자동 실행 활성화
+        systemctl enable --now dhcpd tftp vsftpd
+        systemctl restart dhcpd tftp vsftpd
+
+    - VMware의 DHCP 서비스 정지
+
+
+F. 킥스타트 기능 추가
+  * 킥스타트란? 무인화 자동 설치를 돕는 기능
+    - 킥스타트 설정 파일인 'anaconda-ks.cfg' 복사 및 수정
+        1. 복사
+        cp /root/anaconda-ks.cfg /var/ftp/rocky.ks # 'anaconda-ks.cfg' 파일 이름을 'rocky.ks'로 변경하여 ftp 디렉터리로 복사한다.
+
+        2. 수정
+        # 6번 줄 "repo --name ~" 을 주석, 7번 줄 삽입
+        url --url=ftp://192.168.10.100/pub
+
+        # 17번 줄 cdrom 주석
+
+        # 20번 줄 %packages 밑에 줄 추가
+        @^Server with GUI # 서버 환경 그룹
+        @GNOME Applications # GNOME 응용 프로그램
+        mc
+        vim
+
+    - 킥스타트 설정 파일 권한 변경
+        chmod 644 /var/ftp/rocky.ks
+
+    - 설정 파일 변경
+        # /var/lib/tftpboot/pxelinux.cfg/default 파일의 내용 수정
+        append 줄에 'inst.ks=ftp://192.168.10.100/rocky.ks' 추가
+
+
+G. 가상머신 생성 및 OS 설치 테스트

@@ -1,36 +1,41 @@
 # RHCSA (EX200) Exam Preparation Guide
-- Original: https://rhcsa.github.io/
+* Original: https://rhcsa.github.io/
 
 ## ㄱ. 개요
 ### Chapter 01 - 01. Understand and user essential tools
 #### 01 - Access a shell prompt and issue commands with correct syntax
-- Shell의 기본 명령어 학습
+* Shell의 기본 명령어 학습
 
 #### 목표
-- 기본 명령어 입력을 숙달하고 이해할 수 있다.
+* 기본 명령어 입력을 숙달하고 이해할 수 있다.
 
 #### 주요 명령
-   - tty
-      - 사용중인 셸 확인      
-   - ssh
-      - 원격 접속
-   - sudo
-      - 관리자 권한으로 명령어 실행
-   - cat
-      - 파일의 내용 확인
-   - History
-      - 명령줄 실행 기록
-   - 편집기(Editor)
-      - vim, nano, emacs
+* tty
+   - 사용중인 셸 확인
+
+* ssh
+   - 원격 접속
+
+* sudo
+   - 관리자 권한으로 명령어 실행
+
+* cat
+   - 파일의 내용 확인
+
+* History
+   - 명령줄 실행 기록
+
+* 편집기(Editor)
+   - vim, nano, emacs
 
 ## ㄴ. 특징
-- 자주 사용되는 기본 명령어
+* 자주 사용되는 기본 명령어
 
 ## ㄷ. 본문
 
 ### 1. Accessing the Shell Prompt
 #### 현재 사용중인(입력중인) 터미널 확인
-- tty
+* tty
    ```
    root# tty
       /dev/pts/1
@@ -38,7 +43,7 @@
 
 ### 2. Using the Bash Shell
 #### 2-1. 새로운 계정 생성 및 비밀번호 변경
-- useradd, passwd
+* useradd, passwd
    ```
    root# useradd examuser     # 새로운 계정의 생성
    root# passwd examuser      # 존재하는 계정의 비밀번호 변경
@@ -50,7 +55,7 @@
    ```
 
 #### 2-2. 새로운 계정으로 원격 접속
-- ssh
+* ssh
    ```
    root# ssh examuser@localhost
    examuser@localhost's password:
@@ -59,7 +64,7 @@
    ```
 
 #### 2-3. 새로운 계정에서 명령줄 실행
-- cd /var/log
+* cd /var/log
    ```
    examuser$ cd /var/log		# 로그 기록 보관소
       ls -a		# list --all, 모든 파일(숨김 파일까지) 확인
@@ -67,14 +72,14 @@
       ...
    ```
 #### 2-4. 새로운 계정에서 디렉터리 생성 및 삭제
-- mkdir, rmdir
+* mkdir, rmdir
    ```
    examuser$ mkdir ~/testdir		# 디렉터리 생성
    examuser$ rmdir ~/testdir		# 디렉터리 삭제
    ```
 
 ### 3. Understanding Command Syntax
-- 명령어 입력 순서: 사용자$ \[명령어] \[옵션] \[인자]
+* 명령어 입력 순서: 사용자$ \[명령어] \[옵션] \[인자]
    ```
    examuser$ cd --                            # 바로 이전 경로로 이동
    examuser$ grep -v hello /var/log/secure    # hello를 제외한 문자열 출력
@@ -82,23 +87,23 @@
 
 ### 4. Using Basic File Manipulation Commands
 #### 4-2. cp
-- copy
+* copy
    - 일반 파일은 내용을 복사한다.
    - 문자/블록 디바이스의 경우 디바이스 노드 정보를 복사해 새로이 생성한다.
    - 단, 복사 불가능 또는 의미 없는 경우:
    - 파일 시스템, 하드링크 구조(inode), 특수 파일(IPC, Socket), 고유 플래그(..attr)
 #### 4-3. mv
-- move
+* move
    - 파일을 이동한다.
    - 리눅스는 모든 것이 파일이다.
    - 때문에 디렉터리 또한 파일로 취급하여 mv 명령어로 이동 가능하다.
 
 #### 4-4. rm
-- remove
+* remove
    - 파일을 삭제한다.
 
 ### 5. Using Wildcards and Special Characters
-- 와일드카드(\*)를 사용해보자.
+* 와일드카드(\*)를 사용해보자.
    ```
    examuser$ ls /var/log/m\*
       /var/log/maillog           /var/log/maillog-202xxxxx  /var/log/messages-202xxxxx  /var/log/messages-202xxxxx
@@ -108,7 +113,7 @@
    ```
 
 ### 6. Running Commands as Root (Using sudo)
-- sudo
+* sudo
    ```
    examuser$ sudo yum install httpd
 
@@ -125,7 +130,7 @@
    ```
    
 ### 7. Viewing and Editing Files
-- cat
+* cat
    - concatenate
    - File Descriptor 1번인 일반 출력으로 파일의 내용을 출력한다. 0번은 입력, 2번은 에러(표준)
    ```
@@ -136,11 +141,11 @@
       examuser:x:10001:10001::/home/examuser:/bin/bash
    ```
 #### 7-2. less\, more
-- less, more
+* less, more
    - 파일의 내용을 화면 단위로 보여주며 화면 이동·검색과 같은 기능이 있다.
 
 #### 7-3. Editor(편집기)
-- Editor(편집기)
+* Editor(편집기)
    ```
    - vi by Bill Joy
    - vim by Bram Moolenaar
@@ -155,15 +160,15 @@
    ```
 
 ### 8. Using Command History and Autocompletion
-- history
+* history
    - 입력한 명령어의 기록, 기록을 검색해 재사용 하거나 갯수 제한 등 설정 가능
-- \!\!
+* \!\!
    - history 목록에서 가장 최근 사용했던 명령을 실행한다.
-- \!23
+* \!23
    - CLI가 목록에 저장된 23번 명령어를 읽어와줌. 화살표 키 위를 누르면 23번 명령어를 입력해줌.
 
 ## ㄹ. 기록
-- History
+* History
    ```
    1007  tty
    1008  su - examuser

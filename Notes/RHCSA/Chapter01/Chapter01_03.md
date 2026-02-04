@@ -1,13 +1,13 @@
 # RHCSA (EX200) Exam Preparation Guide
-- https://rhcsa.github.io/
+* https://rhcsa.github.io/
 
 ## ㄱ. 개요
 ### Chapter 01 - 01. Understand and user essential tools
 #### 03 - User grep and regular expressions to analyze text
-- grep 명령어 학습
+* grep 명령어 학습
 
 #### 목표
-- grep 명령어 입력을 숙달하고 원리를 이해한다.
+* grep 명령어 입력을 숙달하고 원리를 이해한다.
 
 #### 주요 명령
     - GREP(BRE, ERE)
@@ -29,13 +29,13 @@
         - 동작 중인 프로세스의 상태를 목록화하여 출력한다.
 
 ## ㄴ. 특징
-- grep 명령어는 정규 표현식 기반 파일 내용 탐색기이다.
+* grep 명령어는 정규 표현식 기반 파일 내용 탐색기이다.
 
 ## ㄷ. 본문
 
 ### 1. Basic grep Usage
 #### grep 명령어를 써보자.
-- grep
+* grep
     ```
     root# grep --help | grep case
         -i, --ignore-case         대소문자 구분을 무시합니다
@@ -44,7 +44,7 @@
 
 ### 2. Using Regular Expressions with grep
 #### 정규 표현식을 써보자.
-- .
+* .
     - .   --> 한 문자
     - ..  --> 두 문자
     - ... --> 세 문자
@@ -55,7 +55,7 @@
         hello
     ```
 
-- \*
+* \*
     - 한 문자가 0개 이상 일치
     ```
     root# grep -E ".*d" regex_test.txt 
@@ -63,14 +63,14 @@
         Regex: <>\d\D\w\W\s\S
     ```
 
-- \^
+* \^
     - 한 줄의 시작 지점에서 부터 일치
     ```
     root# grep '^root' /etc/passwd
         root:x:0:0:root:/root:/bin/bash
     ```
 
-- \$
+* \$
     - 한 줄의 끝 지정
     ```
     root# grep '/bin/bash$' /etc/passwd
@@ -80,7 +80,7 @@
         examuser:x:10001:10001::/home/examuser:/bin/bash
     ```
 
-- \[ \]
+* \[ \]
     - 대괄호 안의 어느 문자이던 일치
     ```
     root# grep '[r]' /etc/passwd
@@ -89,7 +89,7 @@
         ...
     ```
 
-- \\
+* \\
     - grep, BRE에서 특수 문자를 사용하기 위해 필요한 이스케이프 문자
     - grep -E, ERE에서 이스케이프 문자 또는 일반 문자화
     ```
@@ -104,14 +104,14 @@
 
 ### 3. Using Wildcards and Quantifiers
 #### 와일드 카드\(.\)의 수를 변경해보며 사용해보자.
-- 와일드 카드\(.\) 3개
+* 와일드 카드\(.\) 3개
     ```
     root# grep 'root...' /etc/passwd
         root:x:0:0:root:/root:/bin/bash
         operator:x:11:0:operator:/root:/sbin/nologin
     ```
 
-- BRE(Basic Regular Expressions) 방식
+* BRE(Basic Regular Expressions) 방식
     - \\\+
     - BRE는 이스케이프\(\\\)를 추가해 사용한다.
     ```
@@ -120,7 +120,7 @@
         operator:x:11:0:operator:/root:/sbin/nologin
     ```
 
-- ERE(Extended Regular Expressions) 방식
+* ERE(Extended Regular Expressions) 방식
     - \+
     - ERE는 특수 문자가 기본적으로 활성화되어 있다.
     ```
@@ -131,7 +131,7 @@
 
 ### 4. Combining grep with Other Commands
 #### 다른 명령어와 조합해 사용해보자.
-- ps \+ grep
+* ps \+ grep
     - Process Status
     - 동작 중인 프로세스의 상태를 목록화하여 출력한다.
     ```
@@ -139,7 +139,7 @@
         root        1095  0.0  0.3  19748 10916 ?        Ss   17:25   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
         root        3469  0.0  0.0 221820  2676 pts/1    S+   18:09   0:00 grep --color=auto sshd
     ```
-- grep \+ head
+* grep \+ head
     ```
     root# grep -r 'error' /var/log | head		# -r --> recursively
         /var/log/tuned/tuned.log:2025-09-28 14:10:17,915 ERROR    tuned.utils.commands: Executing 'modprobe -r cpufreq_conservative' error: modprobe: FATAL: Module cpufreq_conservative is builtin.
@@ -147,7 +147,7 @@
 
 ### 5. Inverse Matching with grep
 #### 일치하는 문자열 줄을 제외하고 출력
-- \-v 옵션
+* \-v 옵션
     - 입력 예시: grep \-v '문자열' 파일
     ```
     root# grep -v 'nologin' /etc/passwd 
@@ -157,7 +157,7 @@
 
 ### 6. Counting Matches with grep
 #### 일치하는 문자열의 갯수 출력
-- \-c 옵션
+* \-c 옵션
     - 입력 예시: grep \-c '문자열' 파일
     ```
     root# grep -c 'root' /etc/passwd
@@ -166,7 +166,7 @@
 
 ### 7. Display Line Numbers with Matches
 #### 일치하는 문자열의 줄 앞에 행 번호 출력
-- 맨 앞에 행 번호 표시
+* 맨 앞에 행 번호 표시
     - 입력 예시: grep \-n '문자열' 파일 
     ```
     root# grep -n 'sshd' /etc/ssh/sshd_config	
@@ -176,7 +176,7 @@
 
 ### 8. Advanded Regular Expressions with egrep
 #### egrep을 써보자.
-- grep -E 와 같은 ERE(Extended Regular Expressions)
+* grep -E 와 같은 ERE(Extended Regular Expressions)
     - 입력 예시: grep \-E '문자열' 파일
     - \| 이 특수 문자는 정규 표현식이며, 파이프가 아니다.
         - '또는(OR)'의 뜻
@@ -192,7 +192,7 @@
     ```
 
 ## ㄹ. 기록
-- History
+* History
     ```
     1009  grep 'root' /etc/passwd
     1010  tail -n 5 /etc/passwd

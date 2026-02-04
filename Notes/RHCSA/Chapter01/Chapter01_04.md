@@ -1,31 +1,34 @@
 # RHCSA (EX200) Exam Preparation Guide
-- https://rhcsa.github.io/
+* https://rhcsa.github.io/
 
 ## ㄱ. 개요
 ### Chapter 01
 #### 04 - Access remote systems using SSH
-- SSH 명령어 학습
+* SSH 명령어 학습
 
 #### 목표
-- 시스템 관리에 필수적인 원격 접속 도구인 SSH 원리를 이해한다.
+* 시스템 관리에 필수적인 원격 접속 도구인 SSH 원리를 이해한다.
 
 #### 주요 명령
-- ssh
-    - Secure Shell, 네트워크 전송이 암호화 된 원격 접속 도구
-- ssh-keygen
+* ssh
+    - Secure Shell
+    - 네트워크 전송이 암호화 된 원격 접속 도구
+* ssh-keygen
     - 인증키 생성
-- ssh-copy-id
+* ssh-copy-id
     - 식별용 공개키 복사 및 전송
-- ssh-agent
-    - 개인키를 메모리에 할당하는 백그라운드 프로그램
-- ssh-add
+* ssh-agent
+    - 개인키를 등록하는 명령어
+* ssh-add
     - 개인키를 ssh-agent에 등록해준다.
-- scp
-    - Secure Copy, 파일 전송 내용을 암호화해줌
+* scp
+    - Secure Copy
+    - ssh 기반의 암호화된 파일 전송 명령어
+    - 파일 전송 내용을 암호화해줌
 
 ## ㄴ. 특징
-- 공개키, 개인키 관리의 이해
-- ssh-copy-id vs ssh-agent
+* 공개키, 개인키 관리의 이해
+* ssh-copy-id vs ssh-agent
     - ssh-copy-id: 공개키를 호스트에 배포해 호스트에서 나를 검증
     - ssh-agent: 개인키를 클라이언트 메모리에 올려 검증 일부를 생략
 
@@ -33,23 +36,23 @@
 
 ### SSH 접속
 #### 1. 소개
-- ssh: SSH 클라이언트용 명령어
-- sshd: ssh 데몬에 의해 구동되는 시스템
-- 기본적으로 포트 22번 사용
+* ssh: SSH 클라이언트용 명령어
+* sshd: ssh 데몬에 의해 구동되는 시스템
+* 기본적으로 포트 22번 사용
 
-#### 2. 사용
-- ssh [계정]@[호스트]
+#### 2. 사용 방법
+* ssh [계정]@[호스트]
     - 계정: 호스트(접속할 곳)에 존재하는 계정
     - 호스트: IP(자기 자신일 경우 localhost)
 
-- 원격 접속은 집 문을 여는 행위와 같다. 때문에 암호를 요구한다.
+* 원격 접속은 집 문을 여는 행위와 같다. 때문에 암호를 요구한다.
     ```
     [root]# ssh examuser@192.168.1.100
     examuser@192.168.1.100's password:
     ```
 
-#### 3. 결과
-- 접속 시도
+#### 3. 실행 결과
+* 접속 시도
     ```
     [root]# ssh examuser@localhost
     examuser@localhost's password:
@@ -58,8 +61,8 @@
     ```
 
 #### 4. 추가
-- 접속 포트가 다를 경우: 옵션을 이용한다.
-- ssh [계정]@[호스트] -p [포트 번호]
+* 접속 포트가 다를 경우: 옵션을 이용한다.
+* ssh [계정]@[호스트] -p [포트 번호]
     ```
     [root]# ssh examuser@192.168.1.100 -p 2525
 
@@ -68,7 +71,7 @@
 
 ### SSH 인증
 #### 1. 소개
-- 인증이란
+* 인증이란
     - 사람끼리는 주민등록증 또는 면허증(개인을 식별 가능한 공공 증서)
         - ssh-keygen
     - 호스트와 클라이언트 간 통신을 주고 받겠다는 행위의 근간
@@ -80,14 +83,12 @@
         - 공개키: ~/.ssh/id_rsa.pub
         - 허용 목록: ~/.ssh/authrozied_keys
 
-- SSH의 인증 방식
+* SSH의 인증 방식
     - 공개키 암호화 방식으로 인증
     - 정체를 밝히는 공개키와 실제 행위용 개인키가 따로 존재한다.
-        ```
-        예시) 동네 슈퍼마켓에서 아르바이트하는 국정원 직원
-        ```
+        + 예시) 동네 슈퍼마켓에서 아르바이트하는 국정원 직원
 
-- SSH의 인증 과정
+* SSH의 인증 과정
     - 1. 클라이언트 -> 호스트: 접속 요청
     - 2. 호스트 -> 클라이언트: 공개키 목록 요청
     - 3. 클라이언트 -> 호스트: 공개키 목록 전송
@@ -97,31 +98,31 @@
     - 7. 클라이언트: 대기
     - 8. 호스트: 접속 허가
 
-#### 2. 사용
-- ssh-keygen -t [dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa]
-- 옵션 '-t': Type, 타입은 대부분 rsa 또는 ed25519를 사용한다.
-- 엔터만 입력시 모두 기본값으로 설정된다.
+#### 2. 사용 방법 방법
+* ssh-keygen -t [dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa]
+* 옵션 '-t': Type, 타입은 대부분 rsa 또는 ed25519를 사용한다.
+* 엔터만 입력시 모두 기본값으로 설정된다.
     ```
     [root]# ssh-keygen -t rsa
     Generating public/private rsa key pair.
     Enter file in which to save the key (/root/.ssh/id_rsa):
     ```
 
-- ssh-copy-id [사용자]@[호스트]
+* ssh-copy-id [사용자]@[호스트]
     ```
     [root]# ssh-copy-id examuser@192.168.1.100
     examuser@192.168.1.100's password:
     ```
 
-- ssh -i [비밀키] [사용자]@[호스트]
+* ssh -i [비밀키] [사용자]@[호스트]
     ```
     [root]# ssh -i ~/.ssh/id_rsa examuser@192.168.10.100
     Last login: Tue Feb  3 13:44:49 2026 from ::1
     [examuser]$
     ```
 
-#### 3. 결과
-- 공개키를 먼저 복사하여 전송하고 원격 접속을 시도
+#### 3. 실행 결과
+* 공개키를 먼저 복사하여 전송하고 원격 접속을 시도
     - 공개키 복사
         ```
         [root]# ssh-copy-id examuser@192.168.1.100
@@ -144,22 +145,22 @@
 
 ### SSH 설정
 #### 1. 소개
-- 기본 경로: /etc/ssh/sshd_config
-- 사용 권한은 최고 관리자 권한이다.      
-- 설정 변경시 항상 데몬을 재시작해주어야 한다.
+* 기본 경로: /etc/ssh/sshd_config
+* 사용 권한은 최고 관리자 권한이다.      
+* 설정 변경시 항상 데몬을 재시작해주어야 한다.
     - 설정은 보통 동기화되지 않는다.
-- 예)
+* 예)
     - 접속에 암호 입력을 차단하고 인증키로만 식별하도록 제한한다.
     - 접속 가능한 계정을 제한한다.
 
-#### 2. 사용
-- 설정 변경: 편집기 사용(vi,vim,nano,emacs,gedit...)
-- 행 시작 부분의 주석(#)을 반드시 제거해야 설정을 적용할 수 있다.
+#### 2. 사용 방법
+* 설정 변경: 편집기 사용(vi,vim,nano,emacs,gedit...)
+* 행 시작 부분의 주석(#)을 반드시 제거해야 설정을 적용할 수 있다.
     ```
     [root]# vim /etc/ssh/sshd_config
     ```
 
-- 설정 후 SSH 데몬 재시작
+* 설정 후 SSH 데몬 재시작
     ```
     [root]# systemctl restart sshd
     [root]# systemctl status sshd
@@ -167,8 +168,8 @@
     ...
     ```
 
-#### 3. 결과
-- 암호 입력 제한
+#### 3. 실행 결과
+* 암호 입력 제한
     - PasswordAuthentication 행 설정
     - 결과: PasswordAuthentication no
         ```
@@ -176,7 +177,7 @@
         examuser@192.168.10.100: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
         ```
 
-- 공개키로만 식별하도록 제한 
+* 공개키로만 식별하도록 제한 
     - PubkeyAuthentication 행 설정
     - 결과: PubkeyAuthentication yes
         ```
@@ -184,7 +185,7 @@
         examuser@192.168.10.100: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
         ```
 
-- 접속 계정 제한
+* 접속 계정 제한
     - AllowUsers 행 설정
     - 결과: AllowUsers tester
         ```
@@ -200,33 +201,34 @@
 
 ### SSH-AGENT
 #### 1. 소개
-- 비밀번호를 일일이 입력하지 않아도 된다.
-- 위에서 'SSH의 인증 과정'의 4~6번 과정을 생략할 수 있다.
+* 개인키를 메모리에 할당하는 백그라운드 프로그램
+    - 비밀번호를 일일이 입력하지 않아도 된다.
+* 위에서 'SSH의 인증 과정'의 4~6번 과정을 생략할 수 있다.
     - 예) 반복 작업에서 내게 필요한 것을 말하지 않아도 건네주는 유능한 사수
     - 내게 필요한 것을 말하는 과정을 생략해준다.
-- 상세: 개인키를 확인하려고 소켓을 생성해 불러오는 과정을 생략해준다.
+* 상세: 개인키를 확인하려고 소켓을 생성해 불러오는 과정을 생략해준다.
 
-#### 2. 사용
-- 조건: 공개키가 공유된 상태와 ssh-add 명령어
+#### 2. 사용 방법
+* 조건: 공개키가 공유된 상태와 ssh-add 명령어
 
-- 공개키 확인(클라이언트/호스트)
+* 공개키 확인(클라이언트/호스트)
     ```
     cat ~/.ssh/id_rsa.pub
     ```
 
-- ssh-agent 실행 확인
+* ssh-agent 실행 확인
     ```
     [root]# ssh-agent
     ```
 
-- 개인키 등록
+* 개인키 등록
     ```
     [root]# ssh-add ~/.ssh/id_rsa
     Identity added: /root/.ssh/id_rsa (root@RHCSA)
     ```
 
-#### 3. 결과
-- 접속
+#### 3. 실행 결과
+* 접속
     ```
     [root]# ssh examuser@192.168.10.100
     Last login: Thu Mar  7 21:36:25 2005 from ::1
@@ -235,10 +237,10 @@
 
 ### SCP
 #### 1. 소개
-- Secure Copy
+* Secure Copy
 
-#### 2. 사용
-- scp [파일] [계정]@[호스트]:[파일]
+#### 2. 사용 방법
+* scp [파일] [계정]@[호스트]:[파일]
     ```
     [root]# scp examuser@192.168.10.100:/home/examuser/file /home/test/file
 
@@ -252,21 +254,21 @@
     # 192.168.10.100 호스트의 examuser 계정 홈 디렉터리에 저장
     ```
 
-#### 3. 결과
-- 나의 파일을 다른 곳으로 전송
+#### 3. 실행 결과
+* 나의 파일을 다른 곳으로 전송
     ```
     scp pubkey_test examuser@localhost:/home/examuser/
     pubkey_test                                                                        100%  564   299.1KB/s   00:00
     ```
 
 ### SSH 오류
-- 원인: 데몬 실행 여부, 방화벽 설정, SELinux 설정 등
-- 오류시 참조:
+* 원인: 데몬 실행 여부, 방화벽 설정, SELinux 설정 등
+* 오류시 참조:
     - /var/log/secure
     - /var/log/auth.log
 
 ## ㄹ. 기록
-- History
+* History
     ```
     1032  man ssh-keygen 
     1033  ssh-keygen -t rsa
