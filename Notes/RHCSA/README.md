@@ -1,8 +1,8 @@
-# RHCSA (EX200) Exam Preparation Guide
+# RHCSA을 향하여
 * RHCSA (EX200) Exam Preparation Guide을 기반으로 학습 내용을 정리한 문서입니다.
 
 ## ㄱ. 출처
-* https://rhcsa.github.io/
+* [RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
 
 ### Author
 * hamid hosseinzadeh

@@ -2,7 +2,7 @@
 * PowerShell 101을 기반으로 학습 내용을 정리한 문서입니다.
 
 ## ㄱ. 학습 출처
-* https://learn.microsoft.com/ko-kr/powershell/scripting/learn/ps101/00-introduction?view=powershell-7.5
+* [PowerShell 101 - Mike F. Robbins](https://learn.microsoft.com/ko-kr/powershell/scripting/learn/ps101/01-getting-started?view=powershell-7.5)
 
 ### Author
 * Mike F. Robbins
