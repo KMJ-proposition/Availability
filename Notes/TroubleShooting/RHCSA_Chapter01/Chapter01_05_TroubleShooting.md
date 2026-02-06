@@ -1,8 +1,11 @@
-# PAM 설정의 login 파일 문제
+# 서버 tty 로그인 문제 해결 - PAM 설정의 무결성 변조와 스케쥴링 대책
 ---
-추가 사항:
+TODO:
 1. 스크립트 작성 및 cron 스케쥴링
-2. PAM 추가 설명
+<!--
+3. tripwire 설치
+4. 시각화
+-->
 ---
 
 ## ㄱ. 개요
@@ -40,61 +43,70 @@
     - 문제의 서버로 원격 접속 성공하여 해결 진행
 
 ### 원인
-* PAM의 설정 파일인 login 파일 무결성이 지켜지지 않았음
-    - 과거 PAM 설정에 의해 securetty
-
-### 재발 방지
-* 설정 파일 무결성 검사를 위한 cron 스케쥴링
-    - 
+* PAM의 설정 파일인 login 파일의 무결성이 변조된 이력이 발견되었음 
 
 ### 주요 명령어
 * systemctl
     - 시스템 대부분의 서비스를 총괄하는 명령
-
 * man
     - 명령어의 상세 설명서
+* vim
+    - 파일 내용 편집
 
 ### 활용 도구 등
-* Microsoft Copilot
+* Microsoft Copilot(Personal)
     - 원인 탐색 및 해결책 제시
     - 문서 검토
-
 * RedHat Rocky Linux 9.6(Linux Rocky 5.14.0-570.17.1.el9_6.x86_64)
     - 정상 동작 시스템
-
 * 참고 문서
     - GNU man
 
+***
+
 ## ㄴ. 해결
+### 원인
 * PAM의 login 파일 무결성에 문제가 있었기에 패키지 재설치를 통해 원본 파일을 복구하였음
-    - 패키지 재설치는 설정 파일을 덮어쓰지 않음
-    - 때문에 패키지 재설치 후 로그인 시도
-        ```
-        [root]# dnf reinstall util-linux
-        ...
+    - 과거 공부 중 PAM 설정에 의해 securetty.so 파일을 삽입하였던 적이 있었음
+    - 패키지를 재설치 시, 설정 파일을 덮어쓰지 않음
+    - 때문에 기존 설정 파일을 백업하고 패키지 재설치 후 로그인 시도하였음
+        ```bash
+        cd /etc/pam.d/
+        mv login login.bak
+        dnf reinstall util-linux
         ```
     - ![문제 해결](Chapter01_05_TroubleShooting_MainServer_02.png)
+        + 기존 파일은 원본 디렉터리 내부에 'login.bak' 이름으로 보관되어 있음
+
+### 영향
+* 
+
+### 대책
+* 재발 방지를 위한 사후책
+    - 설정 파일 무결성 검사를 위한 cron 스케쥴링
+    ```bash
+    ```
+
+***
 
 ## ㄷ. 대처
 * 대응 절차를 시간 순서로 기술
 * 실험용 환경에서 원격으로 진행
     - Linux Rocky 5.14.0-570.17.1.el9_6.x86_64
 
-### 서비스 점검
-#### 1. 서버 대조
+### 1. 서비스 점검
+#### 서버 대조
 * 정상 실행 및 로그인 가능 확인
     ```bash
     [user]$ systemctl isolate multi-user.target
     ```
-
-#### 2. 서비스 상태 확인
+#### 서비스 상태 확인
 * getty@tty1.service 강제 실행
     - 로그인 불가
-
-#### 3. 원격 접속 여부
+#### 원격 접속 여부
 * ssh 원격 접속 실행
     ```
-    [root]# ssh root@192.168.10.130
+    ssh root@192.168.10.130
     root@192.168.10.130's password: 
     Activate the web console with: systemctl enable --now cockpit.socket
 
@@ -103,14 +115,13 @@
     Last login: Wed Feb  4 13:55:52 2026
     ```
 
-### 계정 관련 점검
-#### 1. PAM 설정 확인
+### 2. 계정 관련 점검
+#### PAM 설정 확인
 * 로컬 로그인 가능 여부를 확인하였으나 기본값으로 설정되어 있었음
     ```
-    [root]# vi /etc/pam.d/login
+    vi /etc/pam.d/login
     ```
-
-#### 2. 계정 잠김 여부 확인
+#### 계정 잠김 여부 확인
 * lslogins
     - 'PWD-LOCK' 열을 확인하였으나 사용 계정이 잠기지 않았음을 확인
         - 0의 경우: 계정 잠기지 않음
@@ -125,15 +136,16 @@
         10001 examuser                0        0        0
         ```
 
+---
+
 ### 3. PAM 설정 재확인
 * PAM의 login 파일의 변조 기록 확인
     - rpm 명령어의 검증(-V) 옵션 사용
     - rpm -V util-linux
         ```
-        [root]# rpm -V util-linux
+        rpm -V util-linux
         S.5....T.  c /etc/pam.d/login
         ```
-
     - 출력되면 원본 패키지에서 변조가 일어났음이 출력된 것
         + S: 파일 크기
         + 5: MD5 Checksum
@@ -142,8 +154,10 @@
 
 
 ## ㄹ. 경과
-* 문제를 해결 후 장시간 서버가 정상 동작하는지 확인 및 기술
+* 문제를 해결 후 약 3시간 서버 접속과 로그인에 문제가 발견되거나 재발되지 않았음
+* 이후 후속조치로 재발 방지를 위한 스크립트 작성 및 cron 스케쥴링을 실시함
 
+***
 
 ## ㅁ. 후기
 ### 느낀점
@@ -158,56 +172,57 @@
 * Timestamp
     - 명령어 사용 시각을 알기 위해 history에 시간 출력을 적용해두어야 한다.
         ```
-        [root]# echo -e '# history timestamp\nexport HISTTIMEFORMAT="%F %T "' >> ~/.bashrc
-        [root]# source ~/.bashrc
-        [root]# history | tail -n 1
+        echo -e '# history timestamp\nexport HISTTIMEFORMAT="%F %T "' >> ~/.bashrc
+        source ~/.bashrc
+        history | tail -n 1
          1009  2026-02-04 15:11:26 history | tail -n 1
         ```
 
+***
 
 ## ㅂ. 기록
 * History
     - 문제의 서버
         + user: root
-        ```
-        974  2026-02-04 15:09:13 su - examuser
-        975  2026-02-04 15:09:13 systemctl status getty@tty1.service 
-        976  2026-02-04 15:09:13 systemctl status sshd.service 
-        977  2026-02-04 15:09:13 systemctl enable --now sshd.service 
-        978  2026-02-04 15:09:13 systemctl status sshd.service 
-        979  2026-02-04 15:09:13 systemctl enable --now getty@tty1.service 
-        980  2026-02-04 13:25:09 uname -a
-        981  2026-02-04 13:35:00 systemctl status getty@tty1.service 
-        982  2026-02-04 13:36:29 export HISTTIMEFORMAT="%F %T "
-        983  2026-02-04 13:36:31 history
-        984  2026-02-04 13:53:03 systemctl cat multi-user.target
-        985  2026-02-04 13:53:03 systemctl list-dependencies multi-user.target | grep getty
-        986  2026-02-04 13:53:26 systemctl enable --now getty@tty1.service 
-        987  2026-02-04 15:09:13 vi /etc/ssh/sshd_config
-        988  2026-02-04 15:09:13 ip a
-        989  2026-02-04 15:09:13 systemctl enable --now getty@tty1.service 
-        990  2026-02-04 14:24:27 ssh examuser@localhost
-        991  2026-02-04 14:24:34 history 
-        992  2026-02-04 14:24:52 export HISTTIMEFORMAT="%F %T " >> ~/.bashrc 
-        993  2026-02-04 14:24:55 source ~/.bashrc 
-        994  2026-02-04 14:24:57 history
-        995  2026-02-04 14:25:42 systemctl status getty@tty1.service 
-        996  2026-02-04 14:25:49 w
-        997  2026-02-04 14:26:01 ps -ef | grep systemd
-        998  2026-02-04 14:27:10 systemctl isolate runlevel3.target 
-        999  2026-02-04 15:09:16 history | tail
-        1000  2026-02-04 15:09:30 tail ~/.bashrc
-        1001  2026-02-04 15:09:38 echo '"export HISTTIMEFORMAT="%F %T "' >> ~/.bashrc
-        1002  2026-02-04 15:09:40 source ~/.bashrc
-        1003  2026-02-04 15:09:50 echo 'export HISTTIMEFORMAT="%F %T "' >> ~/.bashrc
-        1004  2026-02-04 15:09:58 source ~/.bashrc
-        1005  2026-02-04 15:10:00 vi ~/.bashrc
-        1006  2026-02-04 15:11:02 history | tail
-        1007  2026-02-04 15:11:08 source ~/.bashrc
-        1008  2026-02-04 15:11:09 history | tail
-        1009  2026-02-04 15:11:26 history | tail -n 1
-        1010  2026-02-04 15:12:42 history
-        ```
+            ```
+            974  2026-02-04 15:09:13 su - examuser
+            975  2026-02-04 15:09:13 systemctl status getty@tty1.service 
+            976  2026-02-04 15:09:13 systemctl status sshd.service 
+            977  2026-02-04 15:09:13 systemctl enable --now sshd.service 
+            978  2026-02-04 15:09:13 systemctl status sshd.service 
+            979  2026-02-04 15:09:13 systemctl enable --now getty@tty1.service 
+            980  2026-02-04 13:25:09 uname -a
+            981  2026-02-04 13:35:00 systemctl status getty@tty1.service 
+            982  2026-02-04 13:36:29 export HISTTIMEFORMAT="%F %T "
+            983  2026-02-04 13:36:31 history
+            984  2026-02-04 13:53:03 systemctl cat multi-user.target
+            985  2026-02-04 13:53:03 systemctl list-dependencies multi-user.target | grep getty
+            986  2026-02-04 13:53:26 systemctl enable --now getty@tty1.service 
+            987  2026-02-04 15:09:13 vi /etc/ssh/sshd_config
+            988  2026-02-04 15:09:13 ip a
+            989  2026-02-04 15:09:13 systemctl enable --now getty@tty1.service 
+            990  2026-02-04 14:24:27 ssh examuser@localhost
+            991  2026-02-04 14:24:34 history 
+            992  2026-02-04 14:24:52 export HISTTIMEFORMAT="%F %T " >> ~/.bashrc 
+            993  2026-02-04 14:24:55 source ~/.bashrc 
+            994  2026-02-04 14:24:57 history
+            995  2026-02-04 14:25:42 systemctl status getty@tty1.service 
+            996  2026-02-04 14:25:49 w
+            997  2026-02-04 14:26:01 ps -ef | grep systemd
+            998  2026-02-04 14:27:10 systemctl isolate runlevel3.target 
+            999  2026-02-04 15:09:16 history | tail
+            1000  2026-02-04 15:09:30 tail ~/.bashrc
+            1001  2026-02-04 15:09:38 echo '"export HISTTIMEFORMAT="%F %T "' >> ~/.bashrc
+            1002  2026-02-04 15:09:40 source ~/.bashrc
+            1003  2026-02-04 15:09:50 echo 'export HISTTIMEFORMAT="%F %T "' >> ~/.bashrc
+            1004  2026-02-04 15:09:58 source ~/.bashrc
+            1005  2026-02-04 15:10:00 vi ~/.bashrc
+            1006  2026-02-04 15:11:02 history | tail
+            1007  2026-02-04 15:11:08 source ~/.bashrc
+            1008  2026-02-04 15:11:09 history | tail
+            1009  2026-02-04 15:11:26 history | tail -n 1
+            1010  2026-02-04 15:12:42 history
+            ```
         + user: examuser
             ```
             36  sudo systemctl isolate multi-user.target 
@@ -218,6 +233,9 @@
             41  exit
             42  history
             ```
+            
+    ---
+
     - 실험용 서버
         + 문제의 서버로 원격 접속
             ```
@@ -299,3 +317,4 @@
             216  2026-02-04 15:16:59 source ~/.bashrc
             217  2026-02-04 15:17:00 history
             ```
+***
