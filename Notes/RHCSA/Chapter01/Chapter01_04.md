@@ -1,7 +1,12 @@
 # RHCSA을 향하여
-* [RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
+* [참고 문서: RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
     - Chapter 01) Understand and user essential tools
     - 04 - Access remote systems using SSH
+
+* 활용 도구: Microsoft Copilot
+    - 단어 선택
+    - 기입 제안
+    - 문서 검토
 
 ***
 
@@ -248,100 +253,3 @@
     - /var/log/auth.log
 
 ***
-
-## ㄹ. 기록
-* History
-    ```
-    1032  man ssh-keygen 
-    1033  ssh-keygen -t rsa
-    1034  ssh examuser@localhost
-    1035  ssh-copy-id examuser@localhost
-    1036  ssh-keygen
-    1037  ssh-copy-id examuser@localhost
-    1038  ssh examuser@localhost
-    1039  vi ~/.ssh/authorized_keys 
-    1040  vi /etc/ssh/sshd_config
-    1041  cd /etc/ssh/
-    1042  ls
-    1043  ll
-    1044  date
-    1045  date +%y
-    1046  date +%Y
-    1047  date +%Y%m%d
-    1048  date +%Y%m%d\_
-    1049  date +%Y%m%d\_+%H%M%S
-    1050  date +%Y%m%d\_+%H%M
-    1051  date +%Y%m%d\_%H%M
-    1052  #cp sshd_config sshd_config.bak_$(date +%Y%m%d\_%H%M)
-    1053  pwd
-    1054  cp sshd_config sshd_config.bak_$(date +%Y%m%d\_%H%M)
-    1055  ll
-    1056  cp sshd_config sshd_config.bak_$(date +%Y%m%d%H%M)
-    1057  ll
-    1058  vi sshd_config
-    1059  systemctl restart sshd
-    1060  systemctl status sshd
-    1061  ssh examuser@localhost
-    1062  man ssh-agent 
-    1063  eval
-    1064  eval $(ssh-agent)
-    1065  man eval
-    1066  ssh-agent
-    1067  man ssh-agent 
-    1068  ssh-add --help
-    1069  man ssh-add
-    1070  echo $SSH_AGENT_PID
-    1071  echo $SSH_AUTH_SOCK
-    1072  ssh examuser@localhost
-    1073  vi /etc/ssh/sshd_config
-    1074  systemctl restart sshd && systemctl status sshd
-    1075  ssh examuser@localhost
-    1076  ssh-add ~/.ssh/id_rsa
-    1077  ssh examuser@localhost
-    1078  echo $SSH_AGENT_PID 
-    1079  echo $SSH_AUTH_SOCK
-    1080  ssh-agent
-    1081  ssh examuser@localhost
-    1082  vi /etc/ssh/sshd_config
-    1083  systemctl restart sshd && systemctl status sshd
-    1084  ssh examuser@localhost
-    1085  vi /etc/ssh/sshd_config
-    1086  wc ~/.ssh/id_rsa.pub 
-    1087  vi ~/.ssh/id_rsa.pub 
-    1088  vi /etc/ssh/sshd_config
-    1089  systemctl restart sshd && systemctl status sshd
-    1090  cat ~/.ssh/id_rsa.pub > ~/pubkey_test
-    1091  diff ~/.ssh/id_rsa.pub ~/pubkey_test
-    1092  pwd
-    1093  cd
-    1094  cat pubkey_test >> /home/examuser/.ssh/authorized_keys 
-    1095  vi /etc/ssh/sshd_config
-    1096  systemctl restart sshd && systemctl status sshd
-    1097  ssh examuser@localhost
-    1098  systemctl stop sshd
-    1099  ssh-agent
-    1100  systemctl start sshd
-    1101  docker images
-    1102  man scp
-    1103  man ssh\
-    1104  man ssh
-    1105  ssh -i ~/.ssh/id_rsa examuser@localhost
-    1106  vi /etc/ssh/sshd_config
-    1107  systemctl start sshd
-    1108  systemctl restart sshd
-    1109  last
-    1110  last -s1 -n
-    1111  last -n1
-    1112  last -s+2days
-    1113  last -s-2days
-    1114  ssh tester@localhost
-    1115  ssh examuser@localhost
-    1116  ll
-    1117  scp pubkey_test examuser@localhost:/home/examuser/
-    1118  vi /etc/ssh/sshd_config
-    1119  systemctl restart sshd
-    1120  scp pubkey_test examuser@localhost:/home/examuser/
-    1121  getenforce
-    1122  compgen -c | grep context
-    1123  history
-```

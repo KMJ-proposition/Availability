@@ -1,7 +1,12 @@
 # RHCSA을 향하여
-* [RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
+* [참고 문서: RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
     - Chapter 01) Understand and user essential tools
     - 05 - Log in and switch users in multiuser targets
+
+* 활용 도구: Microsoft Copilot
+    - 단어 선택
+    - 기입 제안
+    - 문서 검토
 
 TODO:
 1. 세션
@@ -25,27 +30,21 @@ TODO:
 * su
     - Switch User
     - 특정 사용자로 셸 프로세스 실행
-
 * sudo
     - Super User Do
     - root 권한으로 특정 명령어나 프로그램을 실행한다.
     - 실행이 기록된다.
-
 * visudo
     - vi 편집기로 sudo 설정 파일에 접근
-
 * systemctl
     - systemd를 기반으로 모든 서비스의 동작 여부를 관리
-
 * passwd
     - password
     - 사용자의 상태·암호·암호의 사용 기한 등 인증 토큰을 변경
         + 인증 토큰: 사용자 암호 및 계정 잠금/만료 상태를 의미한다.
         + PAM이 관리하는 사용자 인증 정보 전체를 의미한다.
-
 * w, who
     - 현재 접속중인 사용자를 출력
-
 * exit, logout
     - 입력하는 창(세션) 종료
 
@@ -56,14 +55,12 @@ TODO:
 * su [사용자]
     - 입력한 사용자로 새로운 셸 프로세스를 실행한다.
     - '-'를 옵션으로 지정해 해당 사용자의 셸 환경을 불러온다.
-
 * sudo [명령어 또는 프로그램]
     - root 권한으로 명령어 또는 프로그램을 실행한다.
     - 권한 유무와 관계없이 실행하면 기록된다.
         + 기록 장소: /var/log/secure
     - '-i' 옵션을 지정해 관리자의 환경 변수를 불러온다. 
     - 요청할 수 있는 범위 등을 관리자가 미리 지정해주어야 한다.
-
 * 실행: 
     - su - examuser
         + 사용자의 모든 설정을 탑재하여 examuser로써 접속한다.
@@ -72,14 +69,12 @@ TODO:
             암호:
             마지막 로그인: 수  2월  4 15:48:42 KST 2026 일시 pts/1
             ```
-
     - sudo systemctl restart sshd
         + root 권한으로 ssh 데몬을 재실행 한다.
             ```bash
             sudo systemctl restart sshd
             [sudo] examuser의 암호:
             ```
-
     - 권한이 부족할 경우의 기록
         ```bash
         tail /var/log/secure
@@ -97,12 +92,10 @@ TODO:
         visudo
         경고: /etc/sudoers:124:23: Cmnd_Alias "WOW"을(를) 참조했지만 정의하지 않았습니다
         ```
-
 * sudoers
     - sudo의 보안 정책 플러그인
         + 플러그인: plugin, 
     - sudo를 통해 사용할 수 있는 명령어 접근 정책을 설정한다.
-
 * 실행:
     - visudo
         + sudoers 설정을 변경한다.
@@ -139,7 +132,6 @@ TODO:
             + runlevel을 대상으로 지정하며, 대상에 포함되지 않은 실행중인 모든 서비스를 즉시 종료한다.
         + set-default [대상]
             + runlevel을 대상으로 지정한다.
-
 * target(runlevel의 확장)
     - systemd는 runlevel 대신 target 개념을 사용한다.
     - target은 runlevel을 확장한 서비스 그룹이다.
@@ -150,15 +142,12 @@ TODO:
         + 기본값은 runlevel 3
     - graphical.target
         + 다중 사용자가 접근 가능하면서 UI와 같은 그래픽 환경을 사용할 수 있게 한다.
-
-
 * 실행:
     - systemctl get-default
         ```bash
         systemctl get-default
         graphical.target
         ```
-
     - systemctl set-default
         ```bash
         sudo systemctl set-default multi-user.target 
@@ -166,7 +155,6 @@ TODO:
         Removed "/etc/systemd/system/default.target".
         Created symlink /etc/systemd/system/default.target → /usr/lib/systemd/system/multi-user.target.
         ```
-
     - systemctl isolate
         ```bash
         sudo systemctl isolate multi-user.target 
@@ -193,7 +181,6 @@ TODO:
         + 암호는 최소 8자 이상, 대문자/소문자/숫자/특수문자 중 3종류를 포함해야 한다.
         + 이를 '암호의 복잡성을 만족한다'고 한다.
         + 사용자 계정명 또는 사전에 포함된 단어는 금지한다.
-
 * passwd [계정명]
     - 옵션 없음: 사용자의 암호를 변경한다.
         + 관리자
@@ -213,7 +200,6 @@ TODO:
             새 암호 재입력:
             passwd: 모든 인증 토큰이 성공적으로 업데이트 되었습니다.
             ```
-
     - -l: 사용자의 계정을 잠근다.
         + 관리자
             ```bash
@@ -230,7 +216,6 @@ TODO:
             Password: 
             Login incorrect
             ```
-
     - -u: 사용자의 계정 잠금을 해소한다.
         + 관리자
             ```bash
@@ -250,7 +235,6 @@ TODO:
             Last login: Wed Feb  4 16:56:21 from ::1
             [examuser]$
             ```
-
     - -e: 사용자의 암호 토큰을 폐기하고 변경을 요청한다.
         + 관리자
             ```bash
@@ -269,8 +253,7 @@ TODO:
             Current password: 
             New password: 
             Retype new password: 
-            Last login: Wed Feb  4 17:01:39 from localhost
-            
+            Last login: Wed Feb  4 17:01:39 from localhost            
             ```
 
 ---
@@ -289,10 +272,8 @@ TODO:
         + 해당 TTY에서 실행된 모든 프로세스의 CPU 사용량 합계
     - PCPU
         + 현재 실행 중인 WHAT 프로세스 하나의 CPU 사용량
-
 * who
     - 접속중인 사용자 계정, 사용 환경, 접속 일자, 접속 유지시간을 출력한다.
-
 * 실행:
     - w
         + seat0: GDM이 사용하는 세션이며, 좌석으로 표현한다.
@@ -304,7 +285,6 @@ TODO:
             root     seat0      15:08    0.00s  0.00s  0.00s /usr/libexec/gdm-wayland-session --register-session gnome-session
             root     tty2       15:08    3:21m  0.03s  0.03s /usr/libexec/gnome-session-binary
             ```
-
     - who
         + seat0: GDM이 사용하는 세션이며, 좌석으로 표현한다.
         + tty2: 2번째 가상 콘솔(Ctrl+Alt+F2)
@@ -319,12 +299,10 @@ TODO:
 ### exit, logout
 * exit
     - 현재 셸 세션을 종료한다.
-
 * logout
     - 현재 셸 세션을 종료한다.
     - 로그인 셸에만 제공하는 명령어이다.
     - GUI 터미널은 로그인 셸이 아니다. 따라서 이 명령어가 없다.
-
 * 실행:
     - exit
         ```bash
@@ -336,19 +314,3 @@ TODO:
         ```
 
 ***
-
-## ㄷ. 기록
-* History
-    ```
-    1016  2026-02-04 16:41:55 man passwd
-    1017  2026-02-04 16:54:05 passwd examuser
-    1018  2026-02-04 16:56:04 passwd -l examuser
-    1019  2026-02-04 17:01:16 passwd -u examuser
-    1020  2026-02-04 17:03:02 passwd -e examuser
-    1021  2026-02-04 17:11:25 w
-    1022  2026-02-04 17:15:02 man w
-    1023  2026-02-04 17:15:34 w
-    1024  2026-02-04 17:16:11 man
-    1025  2026-02-04 17:16:13 who
-    1026  2026-02-04 17:21:57 history
-    ```

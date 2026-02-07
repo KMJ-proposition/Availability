@@ -1,7 +1,12 @@
 # RHCSA을 향하여
-* [RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
+* [참고 문서: RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
 	- Chapter 01) Understand and user essential tools
 	- 02 - Use input-output redirection
+
+* 활용 도구: Microsoft Copilot
+    - 단어 선택
+    - 기입 제안
+    - 문서 검토
 
 ***
 
@@ -230,73 +235,4 @@
 				ls: cannot access '/invalid/directory': 그런 파일이나 디렉터리가 없습니다
 			```
 
-***
-
-### 특수 장치
-* /dev/null
-	- 커널 기능의 가상 장치 파일이다.
-	- 마치 블랙홀처럼 내용을 흡수하지만 출력은 하지 않는다.
-	- 실제 하드웨어와 연결되지 않았기에 기록 과정이 없다.
-	- character 파일 유형이며 바이트 스트림으로 동작한다.
-	- 같은 유형: /dev/null, /dev/zero, /dev/random, /dev/urandom
-
-* 실행:
-	```bash
-	ls /nothing 2> /dev/null
-	(ls /nothing 2>&1) > /dev/null
-	```
-
-***
-
-## ㄷ. 기록
-* History
-	```
-	1000  ls /etc > ~/output.txt
-	1001  cd ~
-	1002  ls
-	1003  wc output.txt
-	1004  date >> ~/output.txt
-	1005  wc output.txt
-	1006  tail -n 1 output.txt
-	1007  tail < output.txt
-	1008  ls /var/log | head -n 10
-	1009  ls /etc | wc -l > ~/count.txt
-	1010  cat count.txt
-	1011  ls /etc > &0 | cat
-	1012  ls /etc > &0 cat
-	1013  ls /RHCSA_EXAM/PASS_EXAM.txt 2> ~/errors.txt
-	1014  cat ~/errors.txt 
-	1015  ls /RHCSA_EXAM/EXAM_FEE.txt 2>> ~/errors.txt
-	1016  cat ~/errors.txt 
-	1017  ls /var/log /invalid/directory &> ~/combined.txt
-	1018  cat combined.txt 
-	1019  ls /nothing 2> /dev/null
-	1020  ls /nothing 2>&1 > /dev/null
-	1021  (ls /nothing 2>&1) > /dev/null
-	1022  udevadm /dev/null
-	1023  udevadm --help
-	1024  man udevadm
-	1025  udevadm info /dev/null
-	1026  udevadm monitor /dev/null
-	1027  (ls /nothing 2>&1) > /dev/null 1>&1
-	1028  cat /dev/rendom
-	1029  cat /dev/random 
-	1030  wc /dev/random 
-	1031  random
-	1032  ls /dev/random 
-	1033  ls -l /dev/random 
-	1034  ls -l /dev/null 
-	1035  ls -l /dev/zero 
-	1036  ls -l /dev/sda 
-	1037  ls -l /dev/urandom 
-	1038  ls /etc /invalid/directory > ~/out.txt 2> ~/err.txt
-	1039  ls
-	1040  cat out.txt err.txt
-	1041  wc out.txt err.txt
-	1042  tail -n 1 out.txt err.txt
-	1043  ls /var/log /invalid/directory >> ~/out.txt 2>> ~/err.txt
-	1044  tail -n 1 out.txt err.txt
-	1045  wc out.txt err.txt
-	1046  history
-	```
 ***

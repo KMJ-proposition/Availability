@@ -5,8 +5,12 @@
 4. 오타가 없는가
 
 # RHCSA을 향하여
-* [RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
+* [참고 문서: RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
 
+* 활용 도구: Microsoft Copilot
+    - 단어 선택
+    - 기입 제안
+    - 문서 검토
 
 ***
 

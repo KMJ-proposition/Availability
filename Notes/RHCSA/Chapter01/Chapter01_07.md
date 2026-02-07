@@ -1,7 +1,12 @@
 # RHCSA을 향하여
-* [RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
+* [참고 문서: RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
     - Chapter 01) Understand and user essential tools
     - 07 - Create and edit text files
+
+* 활용 도구: Microsoft Copilot
+    - 단어 선택
+    - 기입 제안
+    - 문서 검토
 
 ***
 
@@ -22,12 +27,12 @@
         >> - Further Reading: 《The Art of Unix Programming》 by Eric S. Raymond (2003)
         >> - AI Summary: 본 해설은 Google Gemini의 기술적 자문을 바탕으로 작성되었습니다.
 
-### 기본 도구의 사용과 이해 - 
+### 기본 도구의 사용과 이해 - 편집기
 #### 학습 목표
 1. vim 편집기를 사용하여 파일 내용을 수정한다.
 
 #### 특징
-* 
+* 편집기는 화면 전환 및 수정 가능하도록 설계 되었다.
 
 #### 주요 명령
 * vim
@@ -117,37 +122,3 @@
     ```
 
 ***
-
-## ㄷ. 기록
-* History
-    ```
-     1231  2026-02-06 12:19:47 ls
-     1232  2026-02-06 12:19:50 w
-     1233  2026-02-06 12:20:07 uptime
-     1234  2026-02-06 12:20:11 vim ~/example.txt
-     1235  2026-02-06 12:20:55 vi ~/.bashrc 
-     1236  2026-02-06 12:21:01 vi ~/.vimrc 
-     1237  2026-02-06 12:21:57 sed -i "0,$s/^/'/" ~/.vimrc 
-     1238  2026-02-06 12:22:00 vi ~/.vimrc 
-     1239  2026-02-06 12:22:05 sed -i "0,$s/^/\'/" ~/.vimrc 
-     1240  2026-02-06 12:23:54 vi ~/.vimrc 
-     1241  2026-02-06 12:24:03 sed -i "0,$s/^/\"/" ~/.vimrc 
-     1242  2026-02-06 12:24:57 sed -i "0,\$s/^/"/" ~/.vimrc 
-     1243  2026-02-06 12:25:05 sed -i "0,\$s/^/\"/" ~/.vimrc 
-     1244  2026-02-06 12:25:24 vi ~/.vimrc 
-     1245  2026-02-06 12:25:36 sed -i "s/^/\"/" ~/.vimrc 
-     1246  2026-02-06 12:25:38 vi ~/.vimrc 
-     1247  2026-02-06 12:26:37 sed -i 's/^"/"/' ~/.vimrc 
-     1248  2026-02-06 12:26:38 vi ~/.vimrc 
-     1249  2026-02-06 12:26:48 sed -i 's/^"//' ~/.vimrc 
-     1250  2026-02-06 12:26:49 vi ~/.vimrc 
-     1251  2026-02-06 12:27:02 sed -i 's/^/"/' ~/.vimrc 
-     1252  2026-02-06 12:47:20 vi ~/example.txt
-     1253  2026-02-06 12:47:56 vim ~/example.txt
-     1254  2026-02-06 13:06:56 cat > example.txt
-     1255  2026-02-06 13:08:35 echo '[Notice] Take Test Text Tool' > TextFile
-     1256  2026-02-06 13:08:46 vim example.txt 
-     1257  2026-02-06 13:08:59 vim TextFile 
-     1258  2026-02-06 13:09:49 head example.txt && echo '---------' && tail TextFile 
-     1259  2026-02-06 13:12:02 history
-    ```

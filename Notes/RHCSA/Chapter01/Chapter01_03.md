@@ -1,7 +1,12 @@
 # RHCSA을 향하여
-* [RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
+* [참고 문서: RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
     - Chapter 01) Understand and user essential tools
     - 03 - User grep and regular expressions to analyze text
+
+* 활용 도구: Microsoft Copilot
+    - 단어 선택
+    - 기입 제안
+    - 문서 검토
 
 ***
 
@@ -177,44 +182,3 @@
     ```
 
 ***
-
-## ㄹ. 기록
-* History
-    ```
-    1009  grep 'root' /etc/passwd
-    1010  tail -n 5 /etc/passwd
-    1011  grep --help | grep case
-    1012  ls
-    1013  pwd
-    1014  echo -e "hello\nworld" > regex_test.txt 
-    1015  grep .ello regex_test.txt 
-    1016  echo -e 'TESTline\nRegex: .,!$^*+-=:?(){}[]\|\n' >> regex_test.txt 
-    1017  cat regex_test.txt 
-    1018  echo -e 'Regex: <>\d\D\w\W\s\S\t\n\A\Z\G' >> regex_test.txt 
-    1019  cat regex_test.txt 
-    1020  grep -E ".*d" regex_test.txt 
-    1021  grep '^root' /etc/passwd
-    1022  grep '/bin/bash$' /etc/passwd
-    1023  grep '[r]' /etc/passwd
-    1024  grep '\n' /etc/passwd
-    1025  grep -E '\n' /etc/passwd
-    1026  grep '\n' regex_test.txt 
-    1027  grep -P '\n' regex_test.txt 
-    1028  grep -P '\n' /etc/passwd
-    1029  grep '\A' regex_test.txt 
-    1030  grep '\\A' regex_test.txt 
-    1031  grep '\*' regex_test.txt 
-    1032  grep 'root...' /etc/passwd
-    1033  grep grep 'root\+' /etc/passwd
-    1034  grep 'ro\+t' /etc/passwd
-    1035  grep -E 'ro+t' /etc/passwd
-    1036  ps aux | grep 'sshd'
-    1037  grep -r 'error' /var/log
-    1038  grep -r 'error' /var/log | head
-    1039  grep -v 'nologin' /etc/passwd
-    1040  grep -c 'root' /etc/passwd
-    1041  grep -n 'sshd' /etc/ssh/sshd_config
-    1042  egrep 'sshd|ftp' /etc/services 
-    1043  grep -E 'sshd|ftp' /etc/services | head
-    1044  history
-    ```

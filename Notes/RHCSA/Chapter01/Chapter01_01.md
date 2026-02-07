@@ -1,7 +1,12 @@
 # RHCSA을 향하여
-* [RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
+* [참고 문서: RHCSA (EX200) Exam Preparation Guide - hamid hosseinzadeh](https://rhcsa.github.io/)
    - Chapter 01) Understand and user essential tools
    - 01 - Access a shell prompt and issue commands with correct syntax
+
+* 활용 도구: Microsoft Copilot
+    - 단어 선택
+    - 기입 제안
+    - 문서 검토
 
 ***
 
@@ -197,38 +202,3 @@
    ```
 
 ***
-
-## ㄷ. 기록
-* History
-   ```
-   1007  tty
-   1008  su - examuser
-   1009  tty
-   1010  ssh examuser@localhost
-   1011  su - rocky
-   1012  man cat
-   1013  man cp
-   1014  mknod /dev/mydevice b 8 0
-   1015  fdisk -l
-   1016  ls -l /dev/mydevice
-   1017  ls -l /dev/sda
-   1018  stat /dev/mydevice
-   1019  stat /dev/sda
-   1020  udevadm info -a -p $(udevadm info -q path -n /dev/mydevice)
-   1021  udevadm --help
-   1022  man udevadm
-   1023  ㄱㄷㅁㅇ
-   1024  read
-   1025  read(fd, buf, size)
-   1026  stat
-   1027  stat --help
-   1028  man stat
-   1029  compgen -c | grep read
-   1030  compgen -c | grep write
-   1031  read --help
-   1032  read(fd, buf, size)
-   1033  su - examuser
-   1034  vi /etc/hosts
-   1035  su - examuser
-   1036  history
-   ```
